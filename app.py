@@ -4,8 +4,8 @@ import numpy as np
 from inference import Network
 
 #INPUT_STREAM = "pets.mp4"
-INPUT_STREAM = "faces.mp4"
-#INPUT_STREAM = "happy.png"
+INPUT_STREAM = "faces1.mp4"
+#INPUT_STREAM = "images/happy.png"
 CPU_EXTENSION = "/opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_sse4.so"
 EXPRESSION = ['NEUTRAL', 'HAPPY', 'SAD', 'SURPRISE', 'ANGER']
 
@@ -90,7 +90,12 @@ def infer_on_video(args):
 
     # Get and open video capture
     cap = cv2.VideoCapture(args.i)
+    
+    
     cap.open(args.i)
+    width = int(cap.get(3))
+    height = int(cap.get(4))
+    out = cv2.VideoWriter('out.mp4', 0x00000021, 60, (width,height))
     it = 0
     prev_index = -1
     # Process frames until the video ends, or process is exited
@@ -115,12 +120,14 @@ def infer_on_video(args):
             result = plugin.extract_output()
             ### TODO: Process the output
             prev_index = process_result(result, it, prev_index)
-
+            cv2.putText(frame, EXPRESSION[prev_index], (10,450), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 255, 0), 2, cv2.LINE_AA)
+            out.write(frame)
         # Break if escape key pressed
         if key_pressed == 27:
             break
 
     # Release the capture and destroy any OpenCV windows
+    out.release()
     cap.release()
     cv2.destroyAllWindows()
 
