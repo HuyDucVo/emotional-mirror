@@ -4,8 +4,8 @@ import numpy as np
 from inference import Network
 
 #INPUT_STREAM = "pets.mp4"
-INPUT_STREAM = "faces1.mp4"
-#INPUT_STREAM = "images/happy.png"
+#INPUT_STREAM = "faces1.mp4"
+INPUT_STREAM = "images/happy.png"
 CPU_EXTENSION = "/opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_sse4.so"
 EXPRESSION = ['NEUTRAL', 'HAPPY', 'SAD', 'SURPRISE', 'ANGER']
 
@@ -44,10 +44,17 @@ def get_args():
     optional = parser.add_argument_group('optional arguments')
     
     # -- Create the arguments
+    
+    # -m for the model directory like model/INT8/emotions-recognition-retail-0003.xml 
     required.add_argument("-m", help=m_desc, required=True)
+    # -i for input file directory like videos/faces.mp4
     optional.add_argument("-i", help=i_desc, default=INPUT_STREAM)
+    # -d for device configuration, other options are CPU, GPU, FPGA, MYRIAD like /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_sse4.so
     optional.add_argument("-d", help=d_desc, default='CPU')
-    optional.add_argument("-t", help=t_desc, default='VIDEO')
+    # -t for input type 
+    optional.add_argument("-t", help=t_desc, default='IMAGE')
+    
+    
     args = parser.parse_args()
 
     return args
@@ -73,8 +80,15 @@ def infer_on_image(args):
     if plugin.wait() == 0:
         result = plugin.extract_output()
         ### TODO: Process the output
-        print(result)
-        
+        index = 0
+        cur = result[0][0][0][0]
+        for x in range(1,5):
+            if cur < result[0][x][0][0]:
+                cur = result[0][x][0][0]
+                index = x
+        print('Detected '  + EXPRESSION[index])
+        cv2.putText(frame, EXPRESSION[index], (10,450), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.imwrite('output_image.jpg', frame)
         
     cv2.destroyAllWindows()
     
@@ -95,7 +109,7 @@ def infer_on_video(args):
     cap.open(args.i)
     width = int(cap.get(3))
     height = int(cap.get(4))
-    out = cv2.VideoWriter('out.mp4', 0x00000021, 60, (width,height))
+    out = cv2.VideoWriter('video_output.mp4', 0x00000021, 60, (width,height))
     it = 0
     prev_index = -1
     # Process frames until the video ends, or process is exited
