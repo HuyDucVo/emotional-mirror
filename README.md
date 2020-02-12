@@ -4,8 +4,8 @@
 
 **Emotional Mirror Interface provides an interface to other applications like Google Voice, Siri, Youtube, etc to advance the UX of the mirror while making their days better and better.**
  
+<img src="/doc/intro_reduced.gif">
 
-![Emotional Mirror Interface](http://g.recordit.co/CokOp4lTry.gif)
 ## Installation
 1. Follow [Intel® Distribution of OpenVINO™ Toolkit](https://software.intel.com/en-us/openvino-toolkit/choose-download)
 
