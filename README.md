@@ -49,6 +49,10 @@ Input
 <img src="/doc/video_input.gif">  
 Output  
 <img src="/sample_output/prototype_INT8.gif" width="500px">  
+## Techniques
+[x] Intel Model Zoo
+[x] Handling Network Output
+
 
 ## Reference
 [Doraemon Anime](https://www.youtube.com/watch?v=MC2oUNPzU3I)
@@ -65,4 +69,7 @@ Please make sure to test as appropriate.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-*Intel® Edge AI Scholarship Program Project Showcase*
+*Intel® Edge AI Scholarship Program Project Showcase* 
+<br>
+<img src="/doc/certificate-participant-bleed-1200x900.jpg" width="500px"> 
+
