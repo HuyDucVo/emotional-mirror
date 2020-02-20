@@ -50,9 +50,11 @@ Input
 Output  
 <img src="/sample_output/prototype_INT8.gif" width="500px">  
 ## Techniques
-[x] Intel Model Zoo
-[x] Handling Network Output
-
+- [x] Intel Model Zoo
+- [x] Handling Network Output
+- [x] Optimization Techniques (Quantization, Freezing, Fusion)
+- [x] Using the Inference Engine with an IR
+- [x] Reusable code to deploy on real-time system
 
 ## Reference
 [Doraemon Anime](https://www.youtube.com/watch?v=MC2oUNPzU3I)
